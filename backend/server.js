@@ -1,9 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const dns = require("dns");
 require("dotenv").config();
-require("dotenv").config();
-console.log("🔑 MONGO_URI:", process.env.MONGO_URI); // add this
+
+if (!process.env.MONGO_URI) {
+    console.error("❌ MONGO_URI is not defined in environment variables.");
+    process.exit(1);
+}
+
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+console.log("🔎 DNS servers set to:", dns.getServers());
+console.log("🔑 MONGO_URI:", process.env.MONGO_URI);
 
 const authRoutes = require("./routes/auth");
 
@@ -21,7 +29,7 @@ app.get("/", (req, res) => {
 
 // Connect to MongoDB Atlas Database
 mongoose.connect(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 3005,
 })
     .then(() => console.log("✅ MongoDB Connected Successfully!"))
     .catch(err => console.error("❌ DB Connection Error: ", err.message));

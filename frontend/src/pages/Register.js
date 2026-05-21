@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import EmojiGrid from '../components/EmojiGrid';
 import '../App.css';
 
+const API_URL = process.env.REACT_APP_API_URL || "";
+
 export default function Register({ onToggleForm }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -24,7 +26,7 @@ export default function Register({ onToggleForm }) {
     }
 
     try {
-      const response = await fetch("http://localhost:3005/api/auth/register", {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password, confirmPassword, emojiPattern })
