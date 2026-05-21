@@ -1,70 +1,159 @@
-# Getting Started with Create React App
+Accessible Emoji Authentication System — MERN Registration & Login
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A clean, beginner-friendly MERN authentication project built for the "User Registration & Login" lecture. Covers sign-up, password hashing, JWT creation, and saving the token to localStorage.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Project Demonstration & Walkthrough
 
-### `npm start`
+### 🔴 [Watch the quick walkthrough video](INSERT_YOUR_GOOGLE_DRIVE_LINK_HERE)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> **Note:** If the link does not open directly, copy and paste it into your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+mern-creative-auth-system/
+├── backend/
+│   ├── controllers/
+│   │   └── authController.js   ← register + login logic
+│   ├── models/
+│   │   └── User.js             ← Mongoose schema (username, email, password, emojiPattern)
+│   ├── routes/
+│   │   └── auth.js             ← POST /register and POST /login
+│   ├── .env.example            ← copy to .env and fill in your values
+│   ├── .gitignore
+│   ├── package.json
+│   └── server.js               ← entry point
+│
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   │   └── EmojiGrid.js     ← emoji selection grid
+    │   ├── pages/
+    │   │   ├── Register.js      ← sign-up form
+    │   │   ├── Login.js         ← login form (stores token)
+    │   │   └── Dashboard.js     ← protected landing page
+    │   ├── App.js               ← routes and auth flow
+    │   ├── App.css              ← styles and layout
+    │   └── index.js             ← React entry point
+    ├── package.json
+    └── public/
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Setup Instructions
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Backend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd backend
+npm install
+```
 
-### `npm run eject`
+Create a `.env` file in the `backend/` folder and add your values:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```env
+MONGO_URI=mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/auth-demo
+JWT_SECRET=any_long_random_string_here
+PORT=3005
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Start the server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm run dev        # uses nodemon — auto-restarts on file changes
+# or
+npm start          # plain node
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Server runs on **http://localhost:3005**
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2. Frontend
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+cd frontend
+npm install
+npm start
+```
 
-### Code Splitting
+Frontend runs on **http://localhost:3000**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+| Method | URL | Body | What it does |
+|--------|-----|------|-------------|
+| POST | `/api/auth/register` | `{ username, email, password, emojiPattern }` | Creates a new user with hashed password |
+| POST | `/api/auth/login` | `{ email, password, emojiPattern }` | Returns a JWT on success |
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## How to Test in Postman
 
-### Advanced Configuration
+**Register:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
 
-### Deployment
+{
+  "username": "Danika Rood",
+  "email": "danikaworx@gmail.com",
+  "password": "securePassword123",
+  "emojiPattern": ["🐱", "🔥", "🧠"]
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Expected: `201 { "message": "Account created successfully!" }`
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Login:**
+
+```
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "danikaworx@gmail.com",
+  "password": "securePassword123",
+  "emojiPattern": ["🐱", "🔥", "🧠"]
+}
+```
+
+Expected: `200 { "token": "eyJ...", "message": "Welcome back!" }`
+
+---
+
+## Seeing the Token in DevTools
+
+1. Open the app in your browser
+2. Register a new account and log in
+3. Open DevTools (F12)
+4. Go to the **Application** tab → **Local Storage** → `localhost:3000`
+5. You should see a `token` key with the JWT value
+
+To decode the token, paste it into **https://jwt.io**.
+
+---
+
+## What’s NOT in this project
+
+- `verifyToken` or authorization middleware wired to routes
+- Role-based access control
+- Protected Express routes using `Authorization: Bearer <token>` headers
+
+---
+
+## Dependencies
+
+**Backend:** express, mongoose, bcryptjs, jsonwebtoken, dotenv, cors, nodemon
+
+**Frontend:** react, react-dom, react-router-dom, axios
