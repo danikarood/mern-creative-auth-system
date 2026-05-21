@@ -35,17 +35,28 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="auth-card-container dashboard-center">
-      <h2>Secure Workspace</h2>
+    <div className="auth-card-container dashboard-card" style={{ textAlign: 'center' }}>
+      <div className="dashboard-icon-badge" style={{ fontSize: '3rem', marginBottom: '15px' }}>💎</div>
+      <h2>Secure Area</h2>
+      <p className="auth-subtitle">Creative Identity Verified</p>
+
       {error ? (
         <div className="auth-message-error">{error}</div>
       ) : (
-        <div>
-          <p className="dashboard-welcome">
-            Welcome back, <strong>{username}</strong>! You have successfully verified your identity using your security emotion pattern.
+        <div className="dashboard-content" style={{ marginTop: '20px' }}>
+          <p style={{ color: '#ffffff', fontSize: '1.2rem', marginBottom: '15px', fontWeight: '600' }}>
+            Welcome, <span style={{ color: '#00dfd8', fontWeight: '800' }}>{username}</span>!
           </p>
-          <button onClick={handleLogout} className="auth-submit-btn logout-btn-color">
-            Log Out Securely
+          <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '30px' }}>
+            You have successfully bypassed encryption barriers using your multi-factor visual emotion pattern system.
+          </p>
+          
+          <button 
+            onClick={handleLogout} 
+            className="auth-submit-btn" 
+            style={{ background: 'linear-gradient(135deg, #ff6b6b 0%, #fa5252 100%)', boxShadow: '0 8px 24px rgba(250, 82, 82, 0.2)' }}
+          >
+            Disconnect Session
           </button>
         </div>
       )}

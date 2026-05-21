@@ -15,23 +15,19 @@ function App() {
     }
   }, []);
 
-  if (isAuthenticated) {
-    return <Dashboard />;
-  }
-
   return (
     <div className="App">
-      <div className="app-nav-container">
-        <button 
-          onClick={() => setShowLogin(!showLogin)}
-          className="app-toggle-btn"
-        >
-          {showLogin ? "Switch to Register Account" : "Switch to Account Login"}
-        </button>
-      </div>
-
       <main>
-        {showLogin ? <Login /> : <Register />}
+        {isAuthenticated ? (
+          <Dashboard />
+        ) : showLogin ? (
+          <Login 
+            onToggleForm={() => setShowLogin(false)} 
+            onLoginSuccess={() => setIsAuthenticated(true)} 
+          />
+        ) : (
+          <Register onToggleForm={() => setShowLogin(true)} />
+        )}
       </main>
     </div>
   );
