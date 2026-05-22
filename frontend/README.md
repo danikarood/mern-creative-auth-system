@@ -6,7 +6,7 @@ A clean, beginner-friendly MERN authentication project built for the "User Regis
 
 ## Project Demonstration & Walkthrough
 
-### 🔴 [Watch the quick walkthrough video](INSERT_YOUR_GOOGLE_DRIVE_LINK_HERE)
+### 🔴 [Watch the quick walkthrough video](https://drive.google.com/drive/folders/12O-UEuhUKGnLWzlGbVse22ZdNzXbeFQ8?usp=sharing)
 
 > **Note:** If the link does not open directly, copy and paste it into your browser.
 
